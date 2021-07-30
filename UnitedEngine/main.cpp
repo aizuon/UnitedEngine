@@ -1,14 +1,11 @@
+#include <cstdlib>
 #include <SFML/Graphics.hpp>
 
-#include "united_solver.hpp"
 #include "display_manager.hpp"
-#include <sstream>
-#include <stdlib.h>
+#include "dynamic_blur.hpp"
+#include "resource.h"
+#include "united_solver.hpp"
 #include "utils.hpp"
-#include "segment.hpp"
-#include <dynamic_blur.hpp>
-#include <iostream>
-
 
 int main()
 {
@@ -18,8 +15,7 @@ int main()
 	settings.antialiasingLevel = 4;
 
 	sf::RenderWindow window(sf::VideoMode(win_width, win_height), "UE2", sf::Style::Fullscreen, settings);
-	//window.setVerticalSyncEnabled(true);
-	window.setFramerateLimit(60);
+	window.setVerticalSyncEnabled(true);
 
 	const float body_radius(16.0f);
 	up::Vec2 world_dimension(12860.0f, 16000.0f);
@@ -31,7 +27,8 @@ int main()
 	DisplayManager displayManager(render_tex, window, solver);
 
 	sf::Font font;
-	font.loadFromFile("res/font.ttf");
+	auto font_res = load_font(IDR_FONT1);
+	font.loadFromMemory(font_res.data(), font_res.size());
 
 	sf::Text text;
 	text.setFont(font);
@@ -56,16 +53,21 @@ int main()
 
 		uint32_t n(400);
 
-		if (displayManager.emit && bodies < 200000) {
-			if (acc_time > 70.0f) {
+		if (displayManager.emit && bodies < 200000)
+		{
+			if (acc_time > 70.0f)
+			{
 				const float spawn_width = n * 2.0f * body_radius;
-				for (int i(0); i < n; ++i) {
-					solver.addBody(up::Vec2(world_dimension.x * 0.5f - spawn_width *0.5f + i * 2.0f *body_radius + rand() % 2, 10.0f));
+				for (int i(0); i < n; ++i)
+				{
+					solver.addBody(up::Vec2(
+						world_dimension.x * 0.5f - spawn_width * 0.5f + i * 2.0f * body_radius + rand() % 2, 10.0f));
 				}
 				acc_time = 0.0f;
 				bodies += n;
 			}
-			if (displayManager.update) {
+			if (displayManager.update)
+			{
 				acc_time += 16.0f;
 			}
 		}
@@ -78,16 +80,19 @@ int main()
 			displayManager.explosion = false;
 		}
 
-		if (displayManager.clic) {
+		if (displayManager.clic)
+		{
 			up::Vec2 clic_pos_display_coord = displayManager.getClicPosition();
 			up::Vec2 clic_pos_world_coord = displayManager.displayCoordToWorldCoord(up::Vec2(mouse_pos.x, mouse_pos.y));
 		}
 
-		if (displayManager.clic) {
+		if (displayManager.clic)
+		{
 			displayManager.clic = false;
 		}
 
-		if (displayManager.update) {
+		if (displayManager.update)
+		{
 			solver.update(0.016f);
 		}
 

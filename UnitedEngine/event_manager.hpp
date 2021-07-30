@@ -1,16 +1,15 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <unordered_map>
 #include <functional>
+#include <unordered_map>
+#include <SFML/Graphics.hpp>
 
 namespace sfev
 {
-
 	// Helper using for shorter types
 	using EventCallback = std::function<void(const sf::Event& event)>;
 
-	template<typename T>
+	template <typename T>
 	using EventCallbackMap = std::unordered_map<T, EventCallback>;
 
 
@@ -18,13 +17,14 @@ namespace sfev
 		This class handles subtyped events like keyboard or mouse events
 		The unpack function allows to get relevant information from the processed event
 	*/
-	template<typename T>
+	template <typename T>
 	class SubTypeManager
 	{
 	public:
 		SubTypeManager(std::function<T(const sf::Event&)> unpack) :
 			m_unpack(unpack)
-		{}
+		{
+		}
 
 		~SubTypeManager() = default;
 
@@ -58,16 +58,28 @@ namespace sfev
 	public:
 		EventManager(sf::Window& window) :
 			m_window(window),
-			m_key_pressed_manager([](const sf::Event& event) {return event.key.code; }),
-			m_key_released_manager([](const sf::Event& event) {return event.key.code; }),
-			m_mouse_pressed_manager([](const sf::Event& event) {return event.mouseButton.button; }),
-			m_mouse_released_manager([](const sf::Event& event) {return event.mouseButton.button; })
+			m_key_pressed_manager([](const sf::Event& event) { return event.key.code; }),
+			m_key_released_manager([](const sf::Event& event) { return event.key.code; }),
+			m_mouse_pressed_manager([](const sf::Event& event) { return event.mouseButton.button; }),
+			m_mouse_released_manager([](const sf::Event& event) { return event.mouseButton.button; })
 		{
 			// Register key events built in callbacks
-			this->addEventCallback(sf::Event::EventType::KeyPressed, [&](const sf::Event& event) {m_key_pressed_manager.processEvent(event); });
-			this->addEventCallback(sf::Event::EventType::KeyReleased, [&](const sf::Event& event) {m_key_released_manager.processEvent(event); });
-			this->addEventCallback(sf::Event::EventType::MouseButtonPressed, [&](const sf::Event& event) {m_mouse_pressed_manager.processEvent(event); });
-			this->addEventCallback(sf::Event::EventType::MouseButtonReleased, [&](const sf::Event& event) {m_mouse_released_manager.processEvent(event); });
+			this->addEventCallback(sf::Event::EventType::KeyPressed, [&](const sf::Event& event)
+			{
+				m_key_pressed_manager.processEvent(event);
+			});
+			this->addEventCallback(sf::Event::EventType::KeyReleased, [&](const sf::Event& event)
+			{
+				m_key_released_manager.processEvent(event);
+			});
+			this->addEventCallback(sf::Event::EventType::MouseButtonPressed, [&](const sf::Event& event)
+			{
+				m_mouse_pressed_manager.processEvent(event);
+			});
+			this->addEventCallback(sf::Event::EventType::MouseButtonReleased, [&](const sf::Event& event)
+			{
+				m_mouse_released_manager.processEvent(event);
+			});
 		}
 
 		// Attach new callback to an event
@@ -141,5 +153,4 @@ namespace sfev
 
 		EventCallbackMap<sf::Event::EventType> m_events_callmap;
 	};
-
 } // End namespace

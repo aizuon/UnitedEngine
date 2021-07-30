@@ -2,16 +2,16 @@
 
 #include <condition_variable>
 #include <mutex>
-#include <iostream>
 
 class Condition
 {
 public:
 	Condition()
 		: m_ready(false)
-		, m_processed(false)
-		, m_mutex()
-	{}
+		  , m_processed(false)
+		  , m_mutex()
+	{
+	}
 
 	void notifyReady()
 	{
@@ -24,7 +24,7 @@ public:
 	void waitReady()
 	{
 		std::unique_lock<std::mutex> lk(m_mutex);
-		m_cv.wait(lk, [this] {return m_ready; });
+		m_cv.wait(lk, [this] { return m_ready; });
 	}
 
 	void notifyProcessed()
@@ -38,7 +38,7 @@ public:
 	void waitProcessed()
 	{
 		std::unique_lock<std::mutex> lk(m_mutex);
-		m_cv.wait(lk, [this] {return m_processed; });
+		m_cv.wait(lk, [this] { return m_processed; });
 	}
 
 private:
@@ -46,5 +46,4 @@ private:
 
 	std::mutex m_mutex;
 	std::condition_variable m_cv;
-
 };

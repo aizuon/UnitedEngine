@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{f80ff4bd-bb11-445e-8900-d380172b7581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\Swarm">
+      <UniqueIdentifier>{b6eaca7e-b2a1-4407-9078-bdbabae0cfb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{1851be2c-08e3-4e39-a4c2-bc26a1b57606}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="swarm.hpp">
+      <Filter>lib\Swarm</Filter>
+    </ClInclude>
+    <ClInclude Include="synchronizer.hpp">
+      <Filter>lib\Swarm</Filter>
+    </ClInclude>
+    <ClInclude Include="worker.hpp">
+      <Filter>lib\Swarm</Filter>
+    </ClInclude>
+    <ClInclude Include="write_synchronizer.hpp">
+      <Filter>lib\Swarm</Filter>
+    </ClInclude>
+    <ClInclude Include="execution_group.hpp">
+      <Filter>lib\Swarm</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamic_blur.hpp">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="vec2.hpp" />
+    <ClInclude Include="access_grid.hpp" />
+    <ClInclude Include="collision_solver.hpp" />
+    <ClInclude Include="condition.hpp" />
+    <ClInclude Include="constraint.hpp" />
+    <ClInclude Include="constraint_solver.hpp" />
+    <ClInclude Include="display_manager.hpp" />
+    <ClInclude Include="event_manager.hpp" />
+    <ClInclude Include="fast_array.hpp" />
+    <ClInclude Include="physic_body.hpp" />
+    <ClInclude Include="segment.hpp" />
+    <ClInclude Include="united_solver.hpp" />
+    <ClInclude Include="utils.hpp" />
+    <ClInclude Include="resource.h">
+      <Filter>res</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="worker.cpp">
+      <Filter>lib\Swarm</Filter>
+    </ClCompile>
+    <ClCompile Include="display_manager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\res\circle.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\img.png">
+      <Filter>res</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\res\font.ttf">
+      <Filter>res</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UnitedEngine.rc">
+      <Filter>res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
